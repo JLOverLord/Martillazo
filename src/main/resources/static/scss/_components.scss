@@ -1,0 +1,354 @@
+// Navbar Principal
+.navbar {
+    background: $navbar-gradient;
+    padding-top: $spacing-sm; // py-2
+    padding-bottom: $spacing-sm; // py-2
+
+.navbar-brand {
+    font-size: $fs-5;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm; // me-2 se convierte en gap para consistencia de espaciado
+
+img {
+    width: $navbar-logo-width;
+    height: $navbar-logo-height;
+    margin-right: $spacing-sm; // me-2
+}
+
+span {
+    font-size: $fs-5;
+    }
+}
+
+.d-flex.mx-auto.w-50 { // Formulario de búsqueda
+    max-width: 50%; // w-50
+}
+
+.d-flex.align-items-center.gap-3 { // Carrito y Login
+    gap: $spacing-md; // gap-3 (Se usó $spacing-md para 1rem)
+
+a {
+    color: #fff; // text-white
+    &:hover {
+    color: rgba(255, 255, 255, 0.75); // Ligera transparencia al pasar el ratón
+    text-decoration: none;
+    }
+i {
+    font-size: $fs-5;
+    }
+    }
+}
+}
+
+// Navbar Secundaria (Categorías)
+.bg-secondary {
+    background-color: $secondary-color !important; // bg-secondary
+    color: #fff; // text-white
+    text-align: center;
+    padding-top: $spacing-sm; // py-2
+    padding-bottom: $spacing-sm; // py-2
+
+.dropdown-toggle {
+    color: #fff;
+    &:hover {
+    color: rgba(255, 255, 255, 0.75);
+    }
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-xs; // gap-2 (0.5rem por defecto en Bootstrap, ajustado a $spacing-xs para 0.25rem)
+
+    &:hover {
+    color: rgba(255, 255, 255, 0.75);
+    }
+}
+
+.dropdown-menu {
+    li a.dropdown-item {
+        color: $dark-color; // Color por defecto para elementos de menú desplegable
+        &:hover {
+        background-color: $light-color; // Hover claro
+        }
+    }
+}
+}
+
+// Botones Específicos
+.btn-outline-light:hover {
+  background-color: $warning-color; // Color de advertencia al pasar el ratón
+}
+
+// Contenedores de Productos (Cards)
+.product-img {
+    max-height: 200px;
+    object-fit: contain;
+    padding: $spacing-sm;
+    border-radius: $border-radius-sm;
+    background-color: $light-color; // Fondo claro
+    border: 1px solid $border-color; // Borde
+}
+
+.card {
+  @include box-shadow; // Usa el mixin para la sombra
+.card-img-top {
+    height: 200px;
+    object-fit: contain;
+    padding: $spacing-sm;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+.card-text {
+    color: $secondary-color; // text-muted
+    margin-bottom: $spacing-xs; // mb-2
+}
+.card-price.price {
+    color: $success-color; // text-success
+    font-size: $fs-4; // lead fs-4
+}
+.mt-auto {
+    margin-top: auto !important; // Utilidad de Bootstrap
+}
+}
+
+// Modales
+.modal-product-img {
+    width: 100%;
+    max-height: $modal-product-image-min-height;
+    object-fit: contain;
+}
+
+.modal-body .col-md-5.text-center {
+    @include flex-center; // Usa el mixin para centrar
+    min-height: $modal-product-image-min-height;
+}
+
+#productDetailsModalLabel {
+    text-transform: uppercase;
+}
+
+#loginModal {
+.modal-title {
+    font-size: $fs-1; // título grande para la modal de login
+}
+.nav-tabs {
+    .nav-link {
+      font-size: $fs-4; // fs-4
+      padding-top: $spacing-md; // py-3
+      padding-bottom: $spacing-md; // py-3
+      padding-left: $spacing-lg; // px-4
+      padding-right: $spacing-lg; // px-4
+    }
+}
+.tab-content {
+    padding: $spacing-md; // p-4
+}
+.form-label {
+    margin-bottom: $spacing-xs; // mb-3 (original)
+}
+.form-control {
+    // Ancho completo w-100 por defecto de Bootstrap
+}
+.invalid-feedback {
+    // Bootstrap ya maneja esto
+}
+.btn-close {
+    // Bootstrap ya maneja esto
+}
+.w-100 {
+    width: 100% !important; // Utilidad de Bootstrap
+}
+}
+
+
+// Footer
+footer {
+  background-color: $dark-color !important; // bg-dark
+  color: #fff; // text-white
+  margin-top: $spacing-xl; // mt-5 (3rem)
+  padding-top: $spacing-lg; // pt-4
+  padding-bottom: $spacing-md; // pb-3
+
+a {
+    color: #fff; // text-white
+    &:hover {
+    text-decoration: underline;
+    }
+}
+
+  // Iconos de redes sociales
+.text-center a {
+    margin-right: $spacing-md; // me-3
+    i {
+      font-size: $fs-4; // fs-4
+    }
+}
+
+hr.border-secondary {
+    border-color: $secondary-color !important;
+    margin-top: $spacing-lg; // mt-4
+}
+
+p.mb-0 {
+    margin-bottom: 0 !important;
+}
+}
+
+// Título del producto destacado
+.featured-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: $dark-color;
+    margin: 2rem 0 1rem;
+    border-bottom: 2px solid $warning-color;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+// Título de categoría
+.category-title {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: $primary-color;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+// Descripción de categoría
+.category-description {
+    text-align: center;
+    font-size: 1rem;
+    color: $secondary-color;
+    margin-bottom: 2rem;
+}
+
+// Títulos estilizados para secciones importantes (producto destacado, categorías)
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+
+    &::after {
+        content: '';
+        display: block;
+        margin: 0.5rem auto 0;
+        height: 4px;
+        width: 100%;
+        max-width: 250px;
+        background-color: $warning-color;
+    }
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+
+    &::after {
+        content: '';
+        display: block;
+        margin: 0.3rem auto 0;
+        height: 3px;
+        width: 100%;
+        max-width: 180px;
+        background-color: $warning-color;
+    }
+}
+
+.table-dark {
+    background-color: #1e1e2f;
+    color: white;
+}
+
+.btn-sm {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.875rem;
+    border-radius: 0.25rem;
+}
+
+ul {
+    margin-bottom: 0;
+    padding-left: 1rem;
+}
+
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #2d6a4f;
+    color: #fff;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+ul {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.btn-asignar {
+    background-color: #40916c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+        background-color: #2d6a4f;
+    }
+    }
+}
+
+.titulo {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #1b4332;
+}
+
+// Media queries específicos de componentes
+@media (min-width: 768px) {
+.modal-body .col-md-5 {
+    padding-right: $spacing-lg; // 1.5rem
+}
+.modal-body .col-md-7 {
+    padding-left: $spacing-lg; // 1.5rem
+}
+}

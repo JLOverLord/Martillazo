@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Gestión de Usuarios</h2>
+        <a th:href="@{/admin/dashboard}" class="btn btn-secondary">← Volver al Panel</a>
+    </div>
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Roles actuales</th>
+                <th>Asignar rol</th>
+                <th>Quitar rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.id}">1</td>
+                <td th:text="${usuario.nombre}">Nombre</td>
+                <td th:text="${usuario.correo}">correo@example.com</td>
+
+                <!-- Roles actuales -->
+                <td>
+                    <span class="badge text-bg-primary me-1"
+                        th:each="rol : ${usuario.roles}" th:text="${rol}"></span>
+                </td>
+
+                <!-- Asignar rol -->
+                <td>
+                    <div th:if="${usuario.correo != 'admin@admin.com'}">
+                        <form th:action="@{'/admin/usuarios/' + ${usuario.id} + '/asignar-rol'}" method="post" class="d-flex">
+                            <select name="rol" class="form-select form-select-sm me-2" required>
+                                <option value="" disabled selected>Seleccionar rol</option>
+                                <option value="ROLE_USUARIO">ROL_USUARIO</option>
+                                <option value="ROLE_TRABAJADOR">ROL_TRABAJADOR</option>
+                                <option value="ROLE_ADMIN">ROL_ADMIN</option>
+                            </select>
+                            <button type="submit" class="btn btn-success btn-sm">Asignar</button>
+                        </form>
+                    </div>
+                    <span th:if="${usuario.correo == 'admin@admin.com'}" class="text-muted">Admin principal</span>
+                </td>
+
+                <!-- Quitar rol -->
+                <td>
+                    <div th:if="${usuario.correo != 'admin@admin.com'}">
+                        <form th:action="@{'/admin/usuarios/' + ${usuario.id} + '/remover-rol'}" method="post" class="d-flex">
+                            <select name="rol" class="form-select form-select-sm me-2" required>
+                                <option value="" disabled selected>Seleccionar rol</option>
+                                <option th:each="rol : ${usuario.roles}"
+                                        th:value="${rol}"
+                                        th:text="${rol}"
+                                        th:if="${rol != 'ROL_ADMIN'}"></option>
+                            </select>
+                            <button type="submit" class="btn btn-danger btn-sm">Quitar</button>
+                        </form>
+                    </div>
+                    <span th:if="${usuario.correo == 'admin@admin.com'}" class="text-muted">No modificable</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

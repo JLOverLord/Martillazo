@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"> <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="${pageTitle}">Preguntas Frecuentes</title> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" /> </head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+                <img th:src="@{/images/LogoFerretería.jpeg}" alt="Logo Martillazo" width="80%" height="70px" class="me-2">
+                <span class="fs-5">Martillazo</span>
+            </a>
+
+            <form class="d-flex mx-auto w-50" role="search">
+                <input class="form-control me-2" type="search" placeholder="Buscar herramientas" aria-label="Buscar">
+                <button class="btn btn-outline-light" type="submit">Buscar</button>
+            </form>
+
+            <div class="d-flex align-items-center gap-3">
+                <a href="#" class="text-white text-decoration-none d-flex align-items-center gap-1">
+                    <i class="bi bi-cart-fill fs-5"></i>
+                    <span>Carrito</span>
+                </a>
+
+                <!-- Si está autenticado -->
+
+            <div sec:authorize="isAuthenticated()" class="dropdown">
+                <a href="#" class="text-white text-decoration-none dropdown-toggle d-flex align-items-center gap-1" role="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span sec:authentication="principal.username" class="text-white">Usuario</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item text-dark" href="#">Ver perfil</a></li>
+                    <li><a class="dropdown-item text-dark" href="#">Mis compras</a></li>
+
+                    <!-- Solo para ADMIN -->
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <a class="dropdown-item text-danger" th:href="@{/admin/dashboard}">
+                            <i class="bi bi-speedometer2 me-1"></i> Panel de administración
+                        </a>
+                    </li>
+
+                    <!-- Solo para TRABAJADOR -->
+                    <li sec:authorize="hasRole('TRABAJADOR')">
+                        <a class="dropdown-item text-danger" th:href="@{/trabajador/dashboard}">
+                            <i class="bi bi-briefcase-fill me-1"></i> Panel del trabajador
+                        </a>
+                    </li>
+
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post" class="m-0">
+                            <button type="submit" class="dropdown-item text-dark">Cerrar sesión</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+                <!-- Si NO está autenticado -->
+                <div sec:authorize="!isAuthenticated()">
+                    <a href="#" class="text-white text-decoration-none d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="bi bi-person-circle fs-5"></i>
+                        <span>Iniciar sesión</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<div class="bg-secondary text-white text-center py-2">
+    <div class="container">
+        <div class="row">
+            <div class="col dropdown">
+                <a class="text-white text-decoration-none d-flex justify-content-center align-items-center gap-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-tools"></i> Categorías
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/index(category='herramientas-manuales')}">Herramientas manuales</a></li>
+                    <li><a class="dropdown-item" th:href="@{/index(category='clavos-y-pernos')}">Clavos y pernos</a></li>
+                    <li><a class="dropdown-item" th:href="@{/index(category='construccion')}">Construcción</a></li>
+                    <li><a class="dropdown-item" th:href="@{/index(category='jardineria')}">Jardinería</a></li>
+                </ul>
+            </div>
+            <div class="col">
+                <a th:href="@{/}" class="text-white text-decoration-none d-flex justify-content-center align-items-center gap-2">
+                    <i class="bi bi-wrench-adjustable-circle-fill"></i> Inicio
+                </a>
+            </div>
+
+            <div class="col">
+                <a th:href="@{/ofertas}" class="text-white text-decoration-none d-flex justify-content-center align-items-center gap-2">
+                    <i class="bi bi-percent"></i> Ofertas
+                </a>
+            </div>
+
+            <div class="col">
+                <a th:href="@{/nosotros}" class="text-white text-decoration-none d-flex justify-content-center align-items-center gap-2">
+                    <i class="bi bi-people-fill"></i> Nosotros
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="main-content-wrapper">
+    <div class="container mt-5">
+        <h2 th:text="${pageTitle}" class="text-center mb-5">Preguntas Frecuentes</h2> <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        ¿Cuáles son los métodos de pago aceptados?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Aceptamos tarjetas de crédito y débito (Visa, MasterCard, American Express), transferencias bancarias y pagos en efectivo al recoger en tienda.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        ¿Realizan envíos a todo el país?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Sí, realizamos envíos a todo el territorio nacional. El tiempo de entrega y el costo varían según la ubicación.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        ¿Cómo puedo realizar una devolución?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Para realizar una devolución, por favor contáctenos dentro de los 15 días posteriores a la recepción del producto. Los productos deben estar en su estado original y con su embalaje original.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-white mt-5 pt-4 pb-3">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-12 col-md-4 text-center text-md-start">
+                <h5>Ferretería Martillazo</h5>
+                <p>Tu ferretería de confianza para cada proyecto.</p>
+                <p><i class="bi bi-geo-alt-fill"></i> PRONTO LA DIRECCION </p>
+                <p><i class="bi bi-telephone-fill"></i> 952714432 </p>
+            </div>
+
+            <div class="col-12 col-md-4 text-center">
+                <h5>Enlaces útiles</h5>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/}" class="text-white text-decoration-none">Inicio</a></li>
+                    <li><a th:href="@{/ofertas}" class="text-white text-decoration-none">Ofertas</a></li>
+                    <li><a th:href="@{/nosotros}" class="text-white text-decoration-none">Nosotros</a></li>
+                    <li><a th:href="@{/preguntas-frecuentes}" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-md-4 text-center text-md-end">
+                <h5>Síguenos</h5>
+                <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-4"></i></a>
+                <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                <a href="#" class="text-white"><i class="bi bi-youtube fs-4"></i></a>
+            </div>
+        </div>
+        <hr class="border-secondary mt-4">
+        <p class="text-center mb-0">&copy; 2025 Ferretería Martillazo | Todos los derechos reservados</p>
+    </div>
+</footer>
+
+<div class="modal fade" id="bienvenidaModal" tabindex="-1" aria-labelledby="bienvenidaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 w-100" id="bienvenidaModalLabel">¡Bienvenido!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Gracias por visitar <strong>Ferretería Martillazo</strong>.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="productDetailsModalLabel">Detalles del Producto</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5 text-center">
+                        <img src="" id="modal-product-image" class="img-fluid rounded mb-3 modal-product-img" alt="Imagen del producto">
+                    </div>
+                    <div class="col-md-7">
+                        <h2 id="modal-product-title" class="mb-3"></h2>
+                        <p class="lead fs-4 text-success" id="modal-product-price"></p>
+                        <hr>
+                        <h4>Descripción:</h4>
+                        <p id="modal-product-description" class="text-muted"></p>
+                        <div class="d-grid gap-2 mt-4">
+                            <button class="btn btn-primary btn-lg" id="modal-add-to-cart-btn">Añadir al carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dynamic-modals-container"></div>
+
+<div th:replace="fragments/login-register-modal :: loginModalFragment"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/script.js}"></script> </body>
+</html>

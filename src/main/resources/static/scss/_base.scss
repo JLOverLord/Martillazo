@@ -1,0 +1,39 @@
+// Asegura que html y body ocupen al menos el 100% de la altura del viewport
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+// Modificaciones para el sticky footer en el body
+body {
+    background: $body-gradient;
+    font-family: $font-primary;
+    color: #333; // Color de texto general, puedes definirlo como variable también
+    display: flex;         // Establece el body como un contenedor flex
+    flex-direction: column; // Apila los elementos hijos (navbars, contenido, footer) verticalmente
+}
+
+/* Nueva regla para el wrapper del contenido principal */
+#main-content-wrapper {
+    flex-grow: 1; /* Esto hará que el contenido principal se expanda y ocupe todo el espacio disponible, empujando el footer hacia abajo */
+}
+
+// Estilos generales de enlaces si no están manejados por Bootstrap o si quieres sobrescribir
+a {
+    text-decoration: none;
+    color: inherit; // Hereda el color del elemento padre por defecto
+
+&:hover {
+    text-decoration: underline;
+    }
+}
+
+// Estilos para títulos o párrafos si necesitas un control más fino que el de Bootstrap
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: $spacing-md; // Ejemplo: un margen inferior consistente
+}
+
+p {
+    line-height: 1.6;
+}

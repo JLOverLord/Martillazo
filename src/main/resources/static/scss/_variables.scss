@@ -1,0 +1,38 @@
+// Colores
+$primary-color: #007bff; // Azul estándar de Bootstrap para elementos primarios
+$secondary-color: #6c757d; // Gris estándar de Bootstrap
+$dark-color: #212529; // Oscuro, usado para el fondo de la barra de navegación principal
+$light-color: #f8f9fa; // Claro, usado para fondos de tarjetas, etc.
+$success-color: #28a745; // Verde para elementos de éxito, como el precio
+$danger-color: #dc3545; // Rojo para errores
+$info-color: #17a2b8; // Cian para información
+$warning-color: #ffc107; // Naranja/Amarillo para advertencias o destacados
+
+// Degradados
+$body-gradient: linear-gradient(135deg, #f3f3f3, #e0e0e0);
+$navbar-gradient: linear-gradient(135deg, #444, #111);
+
+// Fuentes
+$font-primary: 'Segoe UI', sans-serif;
+
+// Tamaños de texto (ejemplos, Bootstrap ya tiene los suyos con variables)
+$fs-5: 1.25rem; // Equivalente a fs-5 de Bootstrap
+$fs-4: 1.5rem;  // Equivalente a fs-4 de Bootstrap
+$fs-1: 2.5rem;  // Equivalente a fs-1 de Bootstrap (para el título del modal de login)
+
+// Espaciados (usando unidades relativas para consistencia con Bootstrap)
+$spacing-xs: 0.25rem; // ~4px (para 'gap-1', 'me-1', etc.)
+$spacing-sm: 0.5rem;  // ~8px (para 'py-2', 'mb-2', etc.)
+$spacing-md: 1rem;    // ~16px (para 'p-4', 'mb-3', 'gap-2', etc.)
+$spacing-lg: 1.5rem;  // ~24px (para 'mt-4', 'px-4', 'py-3', etc.)
+$spacing-xl: 3rem;    // ~48px (para 'mt-5')
+
+// Bordes
+$border-color: #e9ecef; // Color de borde para tarjetas
+$border-radius-sm: 0.25rem; // Radio de borde pequeño
+
+// Propiedades específicas de componentes
+$navbar-logo-width: 80%;
+$navbar-logo-height: 70px; // Corregido: '70em' era un valor irrealista, se asume '70px'.
+$modal-product-image-min-height: 400px;
+$card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); // Sombra ligera para tarjetas

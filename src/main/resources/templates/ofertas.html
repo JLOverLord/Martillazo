@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ofertas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<!-- Navbar principal -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+            <img th:src="@{/images/LogoFerretería.jpeg}" alt="Logo Martillazo" width="80%" height="70px" class="me-2">
+            <span class="fs-5">Martillazo</span>
+        </a>
+
+        <form class="d-flex mx-auto w-50" role="search">
+            <input class="form-control me-2" type="search" placeholder="Buscar herramientas" aria-label="Buscar">
+            <button class="btn btn-outline-light" type="submit">Buscar</button>
+        </form>
+
+        <div class="d-flex align-items-center gap-3">
+            <a href="#" class="text-white text-decoration-none d-flex align-items-center gap-1">
+                <i class="bi bi-cart-fill fs-5"></i>
+                <span>Carrito</span>
+            </a>
+
+            <!-- Usuario autenticado -->
+            <div sec:authorize="isAuthenticated()" class="dropdown">
+                <a href="#" class="text-white text-decoration-none dropdown-toggle d-flex align-items-center gap-1" role="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span sec:authentication="principal.username">Usuario</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item text-dark" href="#">Ver perfil</a></li>
+                    <li><a class="dropdown-item text-dark" href="#">Mis compras</a></li>
+
+                    <li sec:authorize="hasAnyRole('ADMIN', 'TRABAJADOR')">
+                        <a class="dropdown-item text-danger" th:href="@{/admin/dashboard}">
+                            <i class="bi bi-speedometer2 me-1"></i> Panel de administración
+                        </a>
+                    </li>
+
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post" class="m-0">
+                            <button type="submit" class="dropdown-item">
+                                <i class="bi bi-box-arrow-right me-1"></i> Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Usuario NO autenticado -->
+            <div sec:authorize="!isAuthenticated()">
+                <a href="#" class="text-white text-decoration-none d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span>Iniciar sesión</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Navbar secundaria -->
+<div class="bg-secondary text-white text-center py-2">
+    <div class="container">
+        <div class="row">
+            <div class="col dropdown">
+                <a class="text-white text-decoration-none d-flex justify-content-center align-items-center gap-2 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    <i class="bi bi-tools"></i> Categorías
+                </a>
+                <ul class="dropdown-menu">
+                    <li th:each="cat : ${categorias}">
+                        <a class="dropdown-item" th:href="@{'/index?category=' + ${cat.nombre}}" th:text="${cat.nombre}"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <a th:href="@{/}" class="text-white text-decoration-none d-flex justify-content-center align-items-center gap-2">
+                    <i class="bi bi-house-fill"></i> Inicio
+                </a>
+            </div>
+            <div class="col">
+                <a th:href="@{/ofertas}" class="text-white text-decoration-none d-flex justify-content-center align-items-center gap-2">
+                    <i class="bi bi-percent"></i> Ofertas
+                </a>
+            </div>
+            <div class="col">
+                <a th:href="@{/nosotros}" class="text-white text-decoration-none d-flex justify-content-center align-items-center gap-2">
+                    <i class="bi bi-people-fill"></i> Nosotros
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contenido de ofertas -->
+<main class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title">¡Ofertas Especiales!</h2>
+        <p class="text-muted">Descubre nuestras herramientas con precios irresistibles.</p>
+    </div>
+
+    <div class="row">
+        <!-- Ejemplo de producto en oferta -->
+        <div class="col-12 col-sm-6 col-md-4 mb-4" th:each="oferta : ${ofertas}">
+            <div class="card h-100 shadow-sm">
+                <img th:src="${oferta.imagen}" class="card-img-top" th:alt="${oferta.nombre}" style="height: 180px; object-fit: contain;">
+                <div class="card-body d-flex flex-column text-center">
+                    <h5 class="card-title" th:text="${oferta.nombre}">Nombre</h5>
+                    <p class="text-muted" th:text="${oferta.descripcion}">Descripción</p>
+                    <p class="card-price price text-danger fw-bold" th:text="${'S/. ' + #numbers.formatDecimal(oferta.precio, 1, 2)}">S/ 0.00</p>
+                    <div class="mt-auto">
+                        <button class="btn btn-success btn-sm">Añadir al carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-dark text-white mt-5 pt-4 pb-3">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-12 col-md-4 text-center text-md-start">
+                <h5>Ferretería Martillazo</h5>
+                <p>Tu ferretería de confianza para cada proyecto.</p>
+                <p><i class="bi bi-geo-alt-fill"></i> PRONTO LA DIRECCIÓN</p>
+                <p><i class="bi bi-telephone-fill"></i> 952714432</p>
+            </div>
+
+            <div class="col-12 col-md-4 text-center">
+                <h5>Enlaces útiles</h5>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/}" class="text-white text-decoration-none">Inicio</a></li>
+                    <li><a th:href="@{/ofertas}" class="text-white text-decoration-none">Ofertas</a></li>
+                    <li><a th:href="@{/nosotros}" class="text-white text-decoration-none">Nosotros</a></li>
+                    <li><a th:href="@{/preguntas-frecuentes}" class="text-white text-decoration-none">Preguntas frecuentes</a></li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-md-4 text-center text-md-end">
+                <h5>Síguenos</h5>
+                <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-4"></i></a>
+                <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                <a href="#" class="text-white"><i class="bi bi-youtube fs-4"></i></a>
+            </div>
+        </div>
+        <hr class="border-secondary mt-4">
+        <p class="text-center mb-0">&copy; 2025 Ferretería Martillazo | Todos los derechos reservados</p>
+    </div>
+</footer>
+
+<!-- Modal login/register -->
+<div th:replace="fragments/login-register-modal :: loginModalFragment"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

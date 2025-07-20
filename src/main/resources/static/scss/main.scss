@@ -1,0 +1,11 @@
+// 1. Variables: Deben ir primero para que puedan ser utilizadas por todos los demás archivos.
+@import 'variables';
+
+// 2. Mixins: Se pueden importar después de las variables.
+@import 'mixins';
+
+// 3. Base: Estilos globales que afectan a elementos HTML genéricos.
+@import 'base';
+
+// 4. Componentes: Estilos específicos para elementos UI modulares.
+@import 'components';

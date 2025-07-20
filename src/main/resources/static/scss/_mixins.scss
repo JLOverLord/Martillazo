@@ -1,0 +1,11 @@
+// Mixin para centrar contenido con Flexbox
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Mixin para aplicar sombra de caja (usando la variable definida)
+@mixin box-shadow {
+    box-shadow: $card-shadow;
+}
