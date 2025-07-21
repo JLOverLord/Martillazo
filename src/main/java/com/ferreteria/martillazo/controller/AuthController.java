@@ -39,7 +39,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String processRegister(@ModelAttribute Usuario usuario) {
-        String rawPassword = usuario.getContraseña(); // Guarda texto plano
+        String rawPassword = usuario.getContraseña();
         usuario.setContraseña(passwordEncoder.encode(rawPassword));
         usuario.getRoles().add("ROLE_USER");
         usuarioRepository.save(usuario);
